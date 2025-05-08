@@ -2,6 +2,7 @@
     display: flex;
     gap: 0.5rem;
     padding: 0.6rem;
+    border-radius: 0.6rem;
 }
 
 .middlePart {
@@ -41,10 +42,12 @@
 .rightPart {
     display: flex;
     gap: 2rem;
+    align-items: flex-start;
+    margin-right: 0.5rem;
 }
 
 .rightPart .statusDropdown {
-    width: 10rem;
+    width: 9.5rem;
 }
 
 .statusDropdown:global(.yellow) {
@@ -66,5 +69,18 @@
 }
 
 .rightPart .labelDropdown {
-    width: 8rem;
+    width: 8.6rem;
+}
+
+.rightPart .dropdownContainer {
+    display: flex;
+    gap: 0.3rem;
+    flex-direction: column;
+}
+
+.rightPart .dropdownContainer p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    font-weight: 500;
 }

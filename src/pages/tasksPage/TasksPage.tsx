@@ -4,13 +4,22 @@ import { IoFilter } from "react-icons/io5";
 import styles from './TasksPage.module.css';
 import { TaskTile } from '@src/components';
 import { TaskStatus, type Task } from '@src/types/task';
+import type { Label } from '@src/types/label';
+import { Color } from '@src/types/colors';
 
 interface TasksPageProps {}
+
+export const allLabels : Label[] = [
+    { id: '1', name: 'Work', color: Color.YELLOW },
+    { id: '2', name: 'Personal', color: Color.PURPLE },
+    { id: '3', name: 'Urgent', color: Color.YELLOW },
+]
 
 const task1 : Task = {
     id: '1',
     title: 'Task 1',
     description: 'Description for task 1',
+    label: allLabels[0],
     status: TaskStatus.TODO,
     dueDate: new Date(),
 }
@@ -19,9 +28,15 @@ const task2 : Task = {
     id: '2',
     title: 'Task 2',
     description: 'Description for task 2',
+    label: null,
     status: TaskStatus.IN_PROGRESS,
     dueDate: new Date(),
 }
+
+const allTasks : Task[] = [
+    task1,
+    task2,
+]
 
 const TasksPage: React.FC<TasksPageProps> = () => {
     return (
@@ -35,8 +50,9 @@ const TasksPage: React.FC<TasksPageProps> = () => {
             </div>
 
             <div className={styles.tasksContainer}>
-                <TaskTile task={task1}/>
-                <TaskTile task={task2}/>
+                {allTasks.map((task) => (
+                    <TaskTile key={task.id} task={task} />
+                ))}
             </div>
         </div>
     );

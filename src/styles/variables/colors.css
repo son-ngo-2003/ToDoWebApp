@@ -12,6 +12,14 @@
     --blue: #00B4D8;
     --pink: #F49CBB;
     --purple: #6D597A;
+
+    --red-low-opacity: #ff595e20;
+    --orange-low-opacity: #FA812F20;
+    --yellow-low-opacity: #FFBC4220;
+    --teal-low-opacity: #2A9D8F20;
+    --blue-low-opacity: #00B4D820;
+    --pink-low-opacity: #F49CBB20;
+    --purple-low-opacity: #6D597A20;
 }
 
 .light-theme {

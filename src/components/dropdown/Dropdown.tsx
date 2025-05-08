@@ -13,11 +13,12 @@ export interface DropdownItem {
 }
 
 export interface DropdownProps {
-	label: string;
+	label: string | ReactNode;
 	items: DropdownItem[];
 	className?: string;
 	autoClosed?: boolean; // auto close the dropdown when clicking an item
 	disabled?: boolean;
+	dropdownIcon?: ReactNode | null; // default is IoIosArrowDown, if null, no icon will be shown
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ 
@@ -26,6 +27,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 	className, 
 	autoClosed = true,
 	disabled = false,
+	dropdownIcon,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -80,7 +82,10 @@ const Dropdown: React.FC<DropdownProps> = ({
 				type='button'
 			>
 				{label}
-				<IoIosArrowDown className={isOpen ? styles.rotateIcon : ''} />
+				{ dropdownIcon === undefined
+					? <IoIosArrowDown className={isOpen ? styles.rotateIcon : ''} />
+					: dropdownIcon
+				}
 			</button>
 
 			<div className={`${styles.dropdownMenu} background ${isOpen ? styles.open : ''}`}>

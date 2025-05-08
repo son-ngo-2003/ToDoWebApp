@@ -1,8 +1,11 @@
+import type { Label } from "./label";
+
 export interface Task {
     id: string;
     title: string;
     description: string;
     status: TaskStatus;
+    label: Label | null;
     dueDate: Date;
 }
 

@@ -8,6 +8,7 @@
     --dropdown-color: var(--card);
     --dropdown-text-color: var(--text);
     --dropdown-border-color: var(--border);
+    --dropdown-font-weight: 500;
 }
 
 .dropdownContainer.opened {
@@ -34,6 +35,7 @@
     
     color: var(--dropdown-text-color);
     background-color: var(--dropdown-color);
+    font-weight: var(--dropdown-font-weight);
 }
 
 .dropdownTrigger:hover {
@@ -83,6 +85,7 @@
     border-radius: 0.25rem;
     transition: all 0.2s ease;
     width: 100%;
+    font-weight: var(--dropdown-font-weight);
 }
 
 .dropdownLink.selected {
@@ -97,6 +100,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: var(--dropdown-font-weight);
 }
 
 .subDropdownContainer {
@@ -136,24 +140,4 @@
     opacity: 1;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-}
-
-:global(.dark-theme) .dropdownTrigger {
-    border-color: var(--dark-border);
-}
-
-:global(.dark-theme) .dropdownMenu {
-    border-color: var(--dark-border);
-}
-
-:global(.dark-theme) .dropdownMenu::after {
-    border-bottom-color: var(--dark-border);
-}
-
-:global(.dark-theme) .dropdownLink:hover {
-    background-color: var(--dark-background-darker) !important;
-}
-
-:global(.dark-theme) .subDropdownTrigger:hover {
-    background-color: var(--dark-background-darker) !important;
 }

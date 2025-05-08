@@ -3,6 +3,7 @@ import styles from './TaskTile.module.css';
 import Checkbox from "../checkbox/Checkbox";
 import Dropdown from "../dropdown/Dropdown";
 import { LuCalendar } from "react-icons/lu";
+import LabelDropdown from "../labelDropdown/LabelDropdown";
 
 const colorByStatus = {
     [TaskStatus.TODO]: 'yellow',
@@ -35,7 +36,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
     return (
         <div className={`${styles.taskTile} card`}>
             <div className={`${styles.leftPart}`}>
-                <Checkbox id={'1'}/>
+                <Checkbox id={task.id}/>
             </div>
 
             <div className={`${styles.middlePart}`}>
@@ -47,14 +48,22 @@ const TaskTile: React.FC<TaskTileProps> = ({
             </div>
 
             <div className={`${styles.rightPart}`}>
-                <Dropdown 
-                    label={ taskStatusMap[task.status] }
-                    items={ taskStatusList.map((status) => ({
-                        label: taskStatusMap[status],
-                        selected: task.status === status,
-                    }))}    
-                    className={`${colorByStatus[task.status]} ${styles.statusDropdown}`}
-                />
+                <div className={`${styles.dropdownContainer}`}>
+                    <p className="text">Label</p>
+                    <LabelDropdown task={task} className={`${styles.labelDropdown}`}/>
+                </div>
+
+                <div className={`${styles.dropdownContainer}`}>
+                    <p className="text">Status</p>
+                    <Dropdown 
+                        label={ taskStatusMap[task.status] }
+                        items={ taskStatusList.map((status) => ({
+                            label: taskStatusMap[status],
+                            selected: task.status === status,
+                        }))}    
+                        className={`${colorByStatus[task.status]} ${styles.statusDropdown}`}
+                    />
+                </div>
             </div>
         </div>
     );
