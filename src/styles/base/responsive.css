@@ -1,0 +1,23 @@
+/* 
+    mobile-S: 320px;
+    mobile-M: 375px;
+    mobile-L: 425px;
+    tablet: 768px;
+    PC-low: 1024px;
+    PC-high: 1280px;
+    PC-XL: 1440px;
+*/
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background);
+}
+
+.page-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 2rem;
+}
