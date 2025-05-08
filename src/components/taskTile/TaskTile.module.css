@@ -41,7 +41,7 @@
 
 .rightPart {
     display: flex;
-    gap: 2rem;
+    gap: 3.5rem;
     align-items: flex-start;
     margin-right: 0.5rem;
 }

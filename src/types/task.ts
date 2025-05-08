@@ -7,6 +7,11 @@ export interface Task {
     status: TaskStatus;
     label: Label | null;
     dueDate: Date;
+    deleted?: boolean;
+}
+
+export type TaskEntity = Omit<Task, 'label'> & {
+    labelId: string | null;
 }
 
 export enum TaskStatus {

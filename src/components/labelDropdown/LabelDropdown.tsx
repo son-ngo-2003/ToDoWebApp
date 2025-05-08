@@ -2,7 +2,7 @@ import type { Task } from "@src/types/task";
 import { FaPlus } from "react-icons/fa6";
 import Dropdown from "../dropdown/Dropdown";
 import styles from './LabelDropdown.module.css';
-import { allLabels } from "@src/pages/tasksPage/TasksPage";
+import type { Label } from "@src/types/label";
 
 interface LabelDropdownProps {
     task: Task;
@@ -16,7 +16,7 @@ const LabelDropdown: React.FC<LabelDropdownProps> = ({
     return (
         <Dropdown 
             label={ task.label ? task.label.name : "Add Label" }
-            items={ allLabels.map((label) => ({
+            items={ ([] as Label[]).map((label) => ({
                 label: label.name,
             }))}    
             className={`${styles.labelDropdown} ${className} ${task.label ? task.label.color : styles.noLabel}`}
