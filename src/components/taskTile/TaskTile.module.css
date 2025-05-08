@@ -1,0 +1,70 @@
+.taskTile {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.6rem;
+}
+
+.middlePart {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.middlePart h3 {
+    font-size: 1.1rem;
+    margin: 0.18rem 0;
+}
+
+.middlePart .dateContainer {
+    color: var(--text-secondary);
+    opacity: 0.9;
+    font-weight: 500;
+    font-size: 0.9rem;
+
+    display: flex; 
+    gap: 0.3rem;
+
+    margin-top: 0.3rem;
+}
+
+.middlePart .dateContainer:global(.overdue) {
+    color: var(--danger);
+}
+.middlePart .dateContainer:global(.today) {
+    color: var(--warning);
+}
+
+.dateContainer > svg {
+    vertical-align: middle;
+}
+
+.rightPart {
+    display: flex;
+    gap: 2rem;
+}
+
+.rightPart .statusDropdown {
+    width: 10rem;
+}
+
+.statusDropdown:global(.yellow) {
+    --dropdown-color: var(--yellow);
+    --dropdown-text-color: var(--white);
+    --dropdown-border-color: var(--yellow);
+}
+
+.statusDropdown:global(.teal) {
+    --dropdown-color: var(--teal);
+    --dropdown-text-color: var(--white);
+    --dropdown-border-color: var(--teal);
+}
+
+.statusDropdown:global(.blue) {
+    --dropdown-color: var(--blue);
+    --dropdown-text-color: var(--white);
+    --dropdown-border-color: var(--blue);
+}
+
+.rightPart .labelDropdown {
+    width: 8rem;
+}

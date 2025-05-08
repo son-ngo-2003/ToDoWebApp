@@ -1,0 +1,100 @@
+.checkboxWrapper * {
+    box-sizing: border-box;
+}
+
+.cbx {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.cbx:not(:last-child) {
+    margin-right: 6px;
+}
+
+.cbx:hover {
+    background: rgba(0, 119, 255, 0.06);
+}
+
+.cbx span {
+    float: left;
+    vertical-align: middle;
+    transform: translate3d(0, 0, 0);
+}
+
+.cbxBox {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    transform: scale(1);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 1px rgba(0, 16, 75, 0.05);
+}
+
+.cbxBox svg {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    fill: none;
+    stroke: var(--white);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 16px;
+    stroke-dashoffset: 16px;
+    transition: all 0.3s ease;
+    transition-delay: 0.1s;
+    transform: translate3d(0, 0, 0);
+}
+
+.cbxLabel {
+    padding-left: 8px;
+    line-height: 18px;
+}
+
+.cbx:hover .cbxBox {
+    border-color: var(--primary);
+}
+
+.inpCbx {
+    position: absolute;
+    visibility: hidden;
+}
+
+.inpCbx:checked + .cbx .cbxBox {
+    background: var(--primary);
+    border-color: var(--primary);
+    animation: wave 0.4s ease;
+}
+
+.inpCbx:checked + .cbx .cbxBox svg {
+    stroke-dashoffset: 0;
+}
+
+.hiddenSvg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+@media screen and (max-width: 640px) {
+    .cbx {
+        width: 100%;
+        display: inline-block;
+    }
+}
+
+@keyframes wave {
+    50% {
+        transform: scale(0.9);
+    }
+}
