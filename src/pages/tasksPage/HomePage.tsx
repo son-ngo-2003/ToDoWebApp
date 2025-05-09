@@ -1,15 +1,15 @@
 import React from 'react';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
-import styles from './TasksPage.module.css';
+import styles from './HomePage.module.css';
 import { ModalTaskForm, TaskTile } from '@src/components';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useTaskData } from '@src/hooks/data';
 import type { Task } from '@src/types/task';
 
-interface TasksPageProps {}
+interface HomePageProps {}
 
-const TasksPage: React.FC<TasksPageProps> = () => {
+const HomePage: React.FC<HomePageProps> = () => {
     const { getTasks, increaseTaskPriority, updateTaskPriority } = useTaskData();
     const allTasks = useLiveQuery( () => getTasks(), [], []);
 
@@ -31,7 +31,7 @@ const TasksPage: React.FC<TasksPageProps> = () => {
     }
 
     return (
-        <div>
+        <>
             <h1 className="title">All Tasks</h1>
             <div className="separate-line"/>
 
@@ -72,8 +72,8 @@ const TasksPage: React.FC<TasksPageProps> = () => {
                 mode={taskOpenned ? "edit" : "add"}
                 task={taskOpenned}    
             />
-        </div>
+        </>
     );
 };
 
-export default TasksPage;
+export default HomePage;

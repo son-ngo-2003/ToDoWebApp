@@ -11,7 +11,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <DndProvider backend={HTML5Backend}>
       <MantineProvider>
-        <App />
+        <App/>
       </MantineProvider>
     </DndProvider>
   </StrictMode>,

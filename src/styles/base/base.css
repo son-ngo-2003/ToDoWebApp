@@ -1,3 +1,7 @@
+.App {
+    background-color: var(--background);
+}
+
 .separate-line {
     border: 0.8px solid var(--border);
     width: 100%;

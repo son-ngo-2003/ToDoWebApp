@@ -1,1 +1,3 @@
-export {default as TasksPage} from './tasksPage/TasksPage';
+export {default as HomePage} from './tasksPage/HomePage';
+
+export {default as ErrorPage} from './errorPage/ErrorPage';
