@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import styles from './dropdown.module.css';
 import { IoIosArrowDown, IoIosAdd } from 'react-icons/io';
 import { FaCheck } from "react-icons/fa6";
@@ -34,6 +34,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 	onTriggerMenu,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const menuRef = React.useRef<HTMLDivElement>(null);
 
 	const toggleDropdown = (e: React.MouseEvent) => {
 		e.preventDefault();
@@ -83,9 +84,20 @@ const Dropdown: React.FC<DropdownProps> = ({
 		);
 	};
 
+	useEffect(() => {
+		// If isOpen is true, add style display: block to styles.dropdownContainer immediately; if false, add style display: none after 200ms
+		if (isOpen) {
+			menuRef.current?.style.setProperty('display', 'block');
+		} else {
+			setTimeout(() => {
+				menuRef.current?.style.setProperty('display', 'none');
+			}, 200);
+		}
+	}, [isOpen]);
+
 	return (
 		<div className={`${styles.dropdownContainer} ${isOpen ? styles.opened : ''} ${className || ''} ${disabled ? styles.disabled : ''}`}>
-			{isOpen && <div className={`overlay transparent`} onClick={(e) => { e.stopPropagation(); closeDropdown();}} />}
+			{isOpen && <div className={`overlay transparent`} onClick={(e) => { e.stopPropagation(); closeDropdown(); console.log(123)}} />}
 			
 			<button 
 				className={`${styles.dropdownTrigger} background text`} 
@@ -101,7 +113,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 				}
 			</button>
 
-			<div className={`${styles.dropdownMenu} background ${isOpen ? styles.open : ''}`}>
+			<div ref={menuRef} className={`${styles.dropdownMenu} background ${isOpen ? styles.open : ''}`}>
 				{items.map(renderDropdownItem)}
 			</div>
 		</div>

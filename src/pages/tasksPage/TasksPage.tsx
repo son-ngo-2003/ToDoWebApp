@@ -10,11 +10,25 @@ import type { Task } from '@src/types/task';
 interface TasksPageProps {}
 
 const TasksPage: React.FC<TasksPageProps> = () => {
-    const { getTasks } = useTaskData();
+    const { getTasks, increaseTaskPriority, updateTaskPriority } = useTaskData();
     const allTasks = useLiveQuery( () => getTasks(), [], []);
 
     const [isOpenTaskForm, setIsOpenTaskForm] = React.useState(false);
     const [taskOpenned, setTaskOpened] = React.useState<Task | null>(null);
+
+    const moveTask = async (dragId: string, dropId: string) => { // For drag and drop
+        if (!allTasks) return;
+        if (dragId === dropId) return;
+        
+        const dragIndex = allTasks.findIndex(task => task.id === dragId);
+        const dropIndex = allTasks.findIndex(task => task.id === dropId);
+        const direction = dragIndex > dropIndex ? 1 : -1;
+
+        await updateTaskPriority(dragId, allTasks[dropIndex].priority);
+        for (let i = dropIndex; i !== dragIndex; i += direction) {
+            increaseTaskPriority(allTasks[i].id, direction);
+        }
+    }
 
     return (
         <div>
@@ -43,6 +57,7 @@ const TasksPage: React.FC<TasksPageProps> = () => {
                                     setIsOpenTaskForm(true);
                                     setTaskOpened(task);
                                 }}
+                                moveTask={moveTask}
                             />
                         ))) 
                     : <p className={`text`}>No tasks availabel.</p> 

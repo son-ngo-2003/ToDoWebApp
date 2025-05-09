@@ -9,7 +9,7 @@ const db = new Dexie('TodoApp') as Dexie & {
 
 db.version(1).stores({
     labels: 'id, name, deleted',
-    tasks: 'id, title, description, dueDate, status, labelId, deleted',
+    tasks: 'id, title, description, dueDate, status, labelId, deleted, priority',
 });
 
 export { db };

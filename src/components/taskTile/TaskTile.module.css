@@ -5,12 +5,10 @@
     border-radius: 0.6rem;
     transition: all 0.2s ease-in-out;
     position: relative;
-
-    box-shadow: none !important;
 }
 
 .taskTile:hover {
-    transform: translateY(-0.1rem);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     cursor: pointer;
 }
 
@@ -98,4 +96,31 @@
 
 .taskTile:hover .dragIndicatorContainer {
     opacity: 1;
+}
+
+.taskTile.dragging {
+    cursor: grabbing;
+    opacity: 0.5;
+}
+
+.taskTile.willDropAbove::after {
+    content: '';
+    position: absolute;
+    top: -0.5rem;
+    left: 0;
+    right: 0;
+    height: 0.2rem;
+    border-radius: 0.1rem;
+    background-color: var(--primary);
+}
+
+.taskTile.willDropBelow::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    right: 0;
+    height: 0.2rem;
+    border-radius: 0.1rem;
+    background-color: var(--primary);
 }

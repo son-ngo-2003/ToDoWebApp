@@ -9,12 +9,13 @@ export interface Task {
     label: Label | null;
     dueDate: Date | null;
     deleted?: boolean;
+    priority: number;
 }
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 export type TaskEntity = Optional<Omit<Task, 'label'> & {
     labelId: string | null;
-}, 'id'> 
+}, 'id' | 'priority'> 
 
 export enum TaskStatus {
     TODO = 'TODO',

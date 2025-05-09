@@ -5,29 +5,64 @@ import { LuCalendar } from "react-icons/lu";
 import LabelDropdown from "../labelDropdown/LabelDropdown";
 import StatusDropdown from "../statusDropdown/StatusDropdown";
 import { useTaskData } from "@src/hooks/data";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MdDragIndicator } from "react-icons/md";
 import { DnDItemTypes } from "@src/types/DnD";
-import { useDrag } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 
 interface TaskTileProps {
     task: Task,
     onClick?: () => void;
     onCheckboxChange?: (checked: boolean) => void;
+
+    moveTask?: (dragId: string, dropId: string) => void; // For drag and drop
+}
+
+interface DragItem {
+    priority: number
+    id: string
 }
 
 const TaskTile: React.FC<TaskTileProps> = ({ 
     task,
     onClick,
-    onCheckboxChange
+    onCheckboxChange,
+    moveTask
 }) => {
-    const { updateLabelTask } = useTaskData();
+    const taskRef = useRef<HTMLDivElement>(null);
+    const { updateLabelTask, updateTaskStatus } = useTaskData();
     const [ isChecked, setIsChecked ] = useState<boolean>(false);
     const [isDragIndicatorHovered, setIsDragIndicatorHovered] = useState(false);
 
+    const getWillDropPosition = ( draggingPriority: number, thisPriority: number ) => {
+        if (draggingPriority < thisPriority) {
+            return "below";
+        } 
+
+        if (draggingPriority > thisPriority) {
+            return "above";
+        }
+
+        return null;
+    }
+
+    // Drag and drop
+    const [ { willDropPosition }, dropRef] = useDrop<DragItem, void, 
+        { willDropPosition: "above" | "below" | null }
+    >({
+        accept: DnDItemTypes.TASK,
+        canDrop: () => !!moveTask,
+        collect: (monitor) => ({
+            willDropPosition: (monitor.getItem() && !!monitor.isOver()) ? getWillDropPosition(monitor.getItem().priority, task.priority) : null,
+        }),
+        drop: (item: DragItem) => {
+            moveTask?.(item.id, task.id);
+        }
+    });
+
     const [{isDragging}, dragRef] = useDrag({
         type: DnDItemTypes.TASK,
-        item: { id: task.id },
+        item: { id: task.id, priority: task.priority },
         canDrag: () => isDragIndicatorHovered,
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -60,8 +95,19 @@ const TaskTile: React.FC<TaskTileProps> = ({
         }
     };
 
+
+    const getClassName = () => {
+        let className = `${styles.taskTile} card `;
+        isChecked && (className += styles.checked + " ");
+        isDragging && (className += styles.dragging + " ");
+        willDropPosition === "above" && (className += styles.willDropAbove + " ");
+        willDropPosition === "below" && (className += styles.willDropBelow + " ");
+        return className;
+    }
+
+    dropRef(dragRef(taskRef));
     return (
-        <div ref={(ref) => {dragRef(ref)}} className={`${styles.taskTile} card ${isChecked ? styles.checked : ''}`} onClick={onClick}>
+        <div ref={taskRef} className={getClassName()} onClick={onClick}>
             <div className={`${styles.leftPart}`}>
                 <Checkbox 
                     id={task.id}
@@ -91,6 +137,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
                     <p className="text">Status</p>
                     <StatusDropdown
                         status={task.status}
+                        onChange={(status) => updateTaskStatus(task.id, status)}
                     />
                 </div>
             </div>

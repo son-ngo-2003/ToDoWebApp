@@ -70,6 +70,6 @@
 }
     
 .deleteButton {
-    background-color: var(--danger);
+    background-color: var(--danger) !important;
     color: white;
 }

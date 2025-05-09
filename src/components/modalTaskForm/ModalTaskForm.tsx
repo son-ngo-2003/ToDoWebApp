@@ -69,18 +69,18 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
         if (mode === "add") {
             const addedTask = await addTask(updatedTaskEntity);
             onAddTask?.(addedTask);
-        } else if (mode === "edit" && onEditTask) {
+        } else if (mode === "edit") {
             const updatedTask = await updateTask(updatedTaskEntity);
-            onEditTask(updatedTask);
+            onEditTask?.(updatedTask);
         }
 
         onClose();
     };
 
     const handleDelete = async () => {
-        if (mode === "edit" && task && onDeleteTask) {
+        if (mode === "edit" && task) {
             await deleteTask(task.id);
-            onDeleteTask(task);
+            onDeleteTask?.(task);
             onClose();
         }
     };
