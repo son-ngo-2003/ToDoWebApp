@@ -2,6 +2,7 @@ import { type ReactNode, useState } from 'react';
 import styles from './dropdown.module.css';
 import { IoIosArrowDown, IoIosAdd } from 'react-icons/io';
 import { FaCheck } from "react-icons/fa6";
+import React from 'react';
 
 export interface DropdownItem {
 	label: string;
@@ -10,15 +11,17 @@ export interface DropdownItem {
 	subItems?: DropdownItem[];
 	icon?: ReactNode;
 	selected?: boolean;
-}
+	autoClose?: boolean; // auto close the dropdown when clicking an item
+};
 
 export interface DropdownProps {
 	label: string | ReactNode;
-	items: DropdownItem[];
+	items: (DropdownItem | ReactNode)[];
 	className?: string;
 	autoClosed?: boolean; // auto close the dropdown when clicking an item
 	disabled?: boolean;
 	dropdownIcon?: ReactNode | null; // default is IoIosArrowDown, if null, no icon will be shown
+	onTriggerMenu?: ( isOpen: boolean ) => void; // callback when the trigger button is clicked
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ 
@@ -28,14 +31,18 @@ const Dropdown: React.FC<DropdownProps> = ({
 	autoClosed = true,
 	disabled = false,
 	dropdownIcon,
+	onTriggerMenu,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
-	const toggleDropdown = () => {
+	const toggleDropdown = (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
 		if (disabled) {
 			setIsOpen(false);
 			return;
 		}
+		onTriggerMenu?.(!isOpen);
 		setIsOpen(!isOpen);
 	};
 
@@ -43,9 +50,14 @@ const Dropdown: React.FC<DropdownProps> = ({
 		setIsOpen(false);
 	};
 
-	const renderDropdownItem = (item: DropdownItem, index: number) => {
+	const renderDropdownItem = (_item: DropdownItem | ReactNode, index: number) => {
+		if (React.isValidElement(_item)) {
+			return <div key={index}>{_item}</div>;
+		}
+		const item = _item as DropdownItem;
+
 		if (item.subItems && item.subItems.length > 0) {
-			return <SubDropdown key={index} item={item} closeDropdown={autoClosed ? closeDropdown : undefined}/>;
+			return <SubDropdown key={index} item={item} closeDropdown={(item.autoClose !== false && autoClosed) ? closeDropdown : undefined}/>;
 		}
 
 		return (
@@ -54,11 +66,12 @@ const Dropdown: React.FC<DropdownProps> = ({
 				href={item.href || '#'} 
 				className={`${styles.dropdownLink} text`}
 				onClick={(e) => {
+					e.stopPropagation();
 					if (item.onClick) {
 						e.preventDefault();
 						item.onClick?.();
 					}
-					autoClosed && closeDropdown();
+					(item.autoClose !== false) && autoClosed && closeDropdown();
 				}}
 			>
 				<p className={`${styles.dropdownItem} text`}>
@@ -72,7 +85,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
 	return (
 		<div className={`${styles.dropdownContainer} ${isOpen ? styles.opened : ''} ${className || ''} ${disabled ? styles.disabled : ''}`}>
-			{isOpen && <div className={`overlay transparent`} onClick={closeDropdown} />}
+			{isOpen && <div className={`overlay transparent`} onClick={(e) => { e.stopPropagation(); closeDropdown();}} />}
 			
 			<button 
 				className={`${styles.dropdownTrigger} background text`} 
@@ -119,6 +132,7 @@ const SubDropdown: React.FC<SubDropdownProps> = ({ item, closeDropdown }) => {
 				href={item.href || '#'} 
 				className={`${styles.dropdownLink} text`}
 				onClick={(e) => {
+					e.stopPropagation();
 					if (item.onClick) {
 						e.preventDefault();
 						item.onClick?.();

@@ -6,3 +6,6 @@ export interface Label {
     color: Color;
     deleted?: boolean;
 }
+
+type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export type LabelEntity = Optional<Label, "id">;

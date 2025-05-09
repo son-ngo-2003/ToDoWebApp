@@ -3,6 +3,19 @@
     gap: 0.5rem;
     padding: 0.6rem;
     border-radius: 0.6rem;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+
+    box-shadow: none !important;
+}
+
+.taskTile:hover {
+    transform: translateY(-0.1rem);
+    cursor: pointer;
+}
+
+.taskTile.checked {
+    background-color: var(--teal-low-opacity);
 }
 
 .middlePart {
@@ -50,26 +63,8 @@
     width: 9.5rem;
 }
 
-.statusDropdown:global(.yellow) {
-    --dropdown-color: var(--yellow);
-    --dropdown-text-color: var(--white);
-    --dropdown-border-color: var(--yellow);
-}
-
-.statusDropdown:global(.teal) {
-    --dropdown-color: var(--teal);
-    --dropdown-text-color: var(--white);
-    --dropdown-border-color: var(--teal);
-}
-
-.statusDropdown:global(.blue) {
-    --dropdown-color: var(--blue);
-    --dropdown-text-color: var(--white);
-    --dropdown-border-color: var(--blue);
-}
-
 .rightPart .labelDropdown {
-    width: 8.6rem;
+    width: 9.5rem;
 }
 
 .rightPart .dropdownContainer {
@@ -78,9 +73,29 @@
     flex-direction: column;
 }
 
-.rightPart .dropdownContainer p {
+.rightPart .dropdownContainer > p {
     font-size: 0.75rem;
     color: var(--text-secondary);
     opacity: 0.8;
     font-weight: 500;
+}
+
+.taskTile .dragIndicatorContainer {
+    position: absolute;
+    top: 50%;
+    left: -2.0rem;
+    transform: translateY(-50%);
+    color: var(--border);
+    padding: 0.2rem;
+    padding-right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+}
+
+.taskTile:hover .dragIndicatorContainer {
+    opacity: 1;
 }

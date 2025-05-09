@@ -1,0 +1,21 @@
+.statusDropdownContainer {
+    width: 9.5rem;
+}
+
+.statusDropdown:global(.yellow) {
+    --dropdown-color: var(--yellow);
+    --dropdown-text-color: var(--white);
+    --dropdown-border-color: var(--yellow);
+}
+
+.statusDropdown:global(.teal) {
+    --dropdown-color: var(--teal);
+    --dropdown-text-color: var(--white);
+    --dropdown-border-color: var(--teal);
+}
+
+.statusDropdown:global(.blue) {
+    --dropdown-color: var(--blue);
+    --dropdown-text-color: var(--white);
+    --dropdown-border-color: var(--blue);
+}

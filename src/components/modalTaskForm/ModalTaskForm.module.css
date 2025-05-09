@@ -1,0 +1,75 @@
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.titleInput {
+    border: none;
+    font-size: 2.5rem;
+    outline: none;
+    margin: 0 0 1rem 0 !important;
+}
+
+.titleInput::placeholder {
+    opacity: 0.5;
+}
+
+.label {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.descriptionTextarea {
+    border: none;
+    outline: none;
+    margin-top: 0;
+    max-height: 10rem;
+    min-height: 5rem;
+}
+      
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 0.3rem;
+}
+
+.formGroup.horizontal {
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+}
+    
+:global(.mantine-DatePickerInput-input) {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+}
+
+:global(.mantine-InputPlaceholder-placeholder) {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.statusDropdown {
+    margin-left: 2.1rem;
+}
+
+.labelDropdown {
+    margin-left: 2.5rem;
+    max-width: 10rem;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    gap: 1rem;
+}
+    
+.deleteButton {
+    background-color: var(--danger);
+    color: white;
+}

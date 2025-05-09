@@ -2,9 +2,10 @@ import React from 'react';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 import styles from './TasksPage.module.css';
-import { TaskTile } from '@src/components';
+import { ModalTaskForm, TaskTile } from '@src/components';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useTaskData } from '@src/hooks/data';
+import type { Task } from '@src/types/task';
 
 interface TasksPageProps {}
 
@@ -12,25 +13,50 @@ const TasksPage: React.FC<TasksPageProps> = () => {
     const { getTasks } = useTaskData();
     const allTasks = useLiveQuery( () => getTasks(), [], []);
 
+    const [isOpenTaskForm, setIsOpenTaskForm] = React.useState(false);
+    const [taskOpenned, setTaskOpened] = React.useState<Task | null>(null);
+
     return (
         <div>
             <h1 className="title">All Tasks</h1>
             <div className="separate-line"/>
 
             <div className={styles.buttonContainer}>
-                <button className={`${styles.button} button`}> <IoMdAddCircleOutline/> Add Task</button>
+                <button 
+                    className={`${styles.button} button`}
+                    onClick={() => {
+                        setIsOpenTaskForm(true);
+                        setTaskOpened(null);
+                    }}
+                > 
+                    <IoMdAddCircleOutline/> Add Task
+                </button>
                 <button className={`${styles.button} button outline`}><IoFilter /> Filter</button>
             </div>
 
             <div className={styles.tasksContainer}>
                 { allTasks && allTasks.length > 0 
                     ?  (allTasks.map((task) => (
-                            <TaskTile task ={task} key={task.id} />
+                            <TaskTile 
+                                task ={task} key={task.id} 
+                                onClick={() => {
+                                    setIsOpenTaskForm(true);
+                                    setTaskOpened(task);
+                                }}
+                            />
                         ))) 
                     : <p className={`text`}>No tasks availabel.</p> 
 
                 }
             </div>
+
+            <ModalTaskForm 
+                opened={isOpenTaskForm} onClose={()=>{
+                    setIsOpenTaskForm(false);
+                }}
+                mode={taskOpenned ? "edit" : "add"}
+                task={taskOpenned}    
+            />
         </div>
     );
 };

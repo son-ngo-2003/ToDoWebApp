@@ -1,12 +1,14 @@
 import { db } from "@src/config/dexie"
-import type { Label } from "@src/types/label";
+import { generateId } from "@src/config/uuid";
+import type { Label, LabelEntity } from "@src/types/label";
 
 const useLabelData = () => {
     const getLabels = async () : Promise<Label[]> => {
-        return await db.labels.where({deleted: false}).toArray();
+        return await db.labels.filter(l => !l.deleted).toArray();
     };
 
-    const addLabel = async (label: Label) : Promise<Label> => {
+    const addLabel = async (label: LabelEntity) : Promise<Label> => {
+        label.id = generateId();
         const id = await db.labels.add(label);
         return { ...label, id, deleted : false };
     };

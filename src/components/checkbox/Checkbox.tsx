@@ -4,7 +4,7 @@ import styles from './Checkbox.module.css';
 interface CheckboxProps {
     id: string;
     label?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (checked: boolean) => void;
     className?: string;
 }
 
@@ -14,13 +14,19 @@ const Checkbox: React.FC<CheckboxProps> = ({
     onChange,
     className = '',
 }) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (onChange) {
+            onChange(e.target.checked);
+        }
+    };
+
     return (
-        <div className={`${styles.checkboxWrapper} ${className}`}>
+        <div className={`${styles.checkboxWrapper} ${className}`} onClick={(e) => e.stopPropagation()}>
             <input
                 className={styles.inpCbx}
                 id={id}
                 type="checkbox"
-                onChange={onChange}
+                onChange={handleChange}
             />
             <label className={styles.cbx} htmlFor={id}>
                 <span className={styles.cbxBox}>

@@ -51,3 +51,26 @@
 .labelDropdown.noLabel {
     --dropdown-font-weight: 400;
 }
+
+.createLabelContainer {
+    width: 100%;
+}
+
+.createLabelInput {
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    padding: 0.5rem 1rem;
+}
+
+.createLabelInput:focus {
+    border: 1px solid var(--primary);
+}
+
+.iconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
