@@ -12,6 +12,7 @@
     --blue: #00B4D8;
     --pink: #F49CBB;
     --purple: #6D597A;
+    --rainbow: linear-gradient(90deg, #ff595e 0%, #FA812F 16.67%, #FFBC42 33.33%, #2A9D8F 50%, #00B4D8 66.67%, #F49CBB 83.33%, #6D597A 100%);
 
     --red-low-opacity: #ff595e20;
     --orange-low-opacity: #FA812F20;

@@ -17,10 +17,6 @@ const Drawer: React.FC<DrawerProps> = () => {
     const theme = 'light';
     const toggleTheme = () => {}
 
-    useEffect(() => {
-        console.log("render drawer");
-    }, []);
-
     return (
         <div className={`${styles.drawer}`}>
             <div className={styles.header}>

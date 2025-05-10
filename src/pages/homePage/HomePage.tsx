@@ -2,19 +2,22 @@ import React from 'react';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 import styles from './HomePage.module.css';
-import { ModalTaskForm, TaskTile } from '@src/components';
+import { Filterbar, ModalTaskForm, TaskTile } from '@src/components';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useTaskData } from '@src/hooks/data';
 import type { Task } from '@src/types/task';
+import type { FilterValues } from '@src/components/filterbar/Filterbar';
 
 interface HomePageProps {}
 
 const HomePage: React.FC<HomePageProps> = () => {
-    const { getTasks, increaseTaskPriority, updateTaskPriority } = useTaskData();
-    const allTasks = useLiveQuery( () => getTasks(), [], []);
-
     const [isOpenTaskForm, setIsOpenTaskForm] = React.useState(false);
     const [taskOpenned, setTaskOpened] = React.useState<Task | null>(null);
+    const [isOpenFilterbar, setIsOpenFilterbar] = React.useState(false);
+    const [currentFilter, setCurrentFilter] = React.useState<FilterValues>({searchValue: "", statuses: [], labels: [], dueDate: null});
+
+    const { getTasksByFilter, increaseTaskPriority, updateTaskPriority } = useTaskData();
+    const allTasks = useLiveQuery( () => getTasksByFilter(currentFilter), [currentFilter], []);
 
     const moveTask = async (dragId: string, dropId: string) => { // For drag and drop
         if (!allTasks) return;
@@ -29,6 +32,10 @@ const HomePage: React.FC<HomePageProps> = () => {
             increaseTaskPriority(allTasks[i].id, direction);
         }
     }
+
+    const nbFilterApplied = currentFilter.searchValue ? 1 : 0 +
+                            currentFilter.statuses.length +
+                            currentFilter.labels.length;
 
     return (
         <>
@@ -45,8 +52,17 @@ const HomePage: React.FC<HomePageProps> = () => {
                 > 
                     <IoMdAddCircleOutline/> Add Task
                 </button>
-                <button className={`${styles.button} button outline`}><IoFilter /> Filter</button>
+                <button className={`${styles.button} button outline`}
+                    onClick={() => setIsOpenFilterbar(!isOpenFilterbar)}
+                >
+                    <IoFilter /> Filter {nbFilterApplied > 0 ? `(${nbFilterApplied})` : ""}
+                </button>
             </div>
+
+            <div className={`${styles.filterbarContainer} ${isOpenFilterbar ? styles.open : ""}`}>
+                <Filterbar onFilterChange={setCurrentFilter}/>
+            </div>
+
 
             <div className={styles.tasksContainer}>
                 { allTasks && allTasks.length > 0 

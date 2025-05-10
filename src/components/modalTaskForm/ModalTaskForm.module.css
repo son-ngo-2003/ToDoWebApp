@@ -40,14 +40,14 @@
     align-items: center;
 }
     
-:global(.mantine-DatePickerInput-input) {
+.datePickerInput {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
     border: none;
 }
 
-:global(.mantine-InputPlaceholder-placeholder) {
+.datePickerPlaceholder {
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 500;

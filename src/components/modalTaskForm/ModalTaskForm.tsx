@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import dayjs from 'dayjs';
 import { Modal } from "@mantine/core";
-import { nanoid } from "nanoid";
 import type { Task, TaskEntity } from "@src/types/task";
-import { TaskStatus, taskStatusList, taskStatusMap } from "@src/types/task";
+import { TaskStatus } from "@src/types/task";
 import styles from "./ModalTaskForm.module.css";
 import { DatePickerInput } from "@mantine/dates";
 import { LuCalendar } from "react-icons/lu";
-import Dropdown from "../dropdown/Dropdown";
 import StatusDropdown from "../statusDropdown/StatusDropdown";
 import LabelDropdown from "../labelDropdown/LabelDropdown";
 import { useTaskData } from "@src/hooks/data";
@@ -104,8 +102,8 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
                 <div className={`${styles.formGroup} ${styles.horizontal}`}>
                     <label htmlFor="dueDate" className={`${styles.label} text`}>Status</label>
                     <StatusDropdown
-                        status={status}
-                        onChange={(newStatus) => setStatus(newStatus)}
+                        selectedStatus={[status]}
+                        onSelectStatus={(newStatus) => setStatus(newStatus)}
                         className={styles.statusDropdown}
                     />
                 </div>
@@ -120,14 +118,21 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
                         placeholder="No due date"
                         value={dueDate}
                         onChange={(date) => date !== null ? setDueDate(dayjs(date).toDate()) : setDueDate(null)}
+                        highlightToday={true}
+                        classNames={{
+                            input: styles.datePickerInput,
+                            placeholder: styles.datePickerPlaceholder,
+                        }}
                     />
                 </div>
 
                 <div className={`${styles.formGroup} ${styles.horizontal}`}>
                     <label htmlFor="dueDate" className={`${styles.label} text`}>Label </label>
                     <LabelDropdown
-                        labelId={labelId}
-                        onSelectLabel={(label) => setLabelId(label == null ? null : label.id)}
+                        selectedLabelIds={ labelId ? [labelId] : []}
+                        onSelectLabel={(label) => {
+                            setLabelId( (label == null || label.id === labelId) ? null : label.id)
+                        }}
                         className={styles.labelDropdown}
                     />
                 </div>

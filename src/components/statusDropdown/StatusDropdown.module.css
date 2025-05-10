@@ -19,3 +19,7 @@
     --dropdown-text-color: var(--white);
     --dropdown-border-color: var(--blue);
 }
+
+.statusDropdown.multipleStatus {
+    --dropdown-border-color: var(--border);
+}

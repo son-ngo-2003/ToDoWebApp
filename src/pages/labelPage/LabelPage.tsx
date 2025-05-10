@@ -2,7 +2,7 @@ import React from 'react';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 import styles from './LabelPage.module.css';
-import { ModalTaskForm, TaskTile } from '@src/components';
+import { Filterbar, ModalTaskForm, TaskTile } from '@src/components';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useTaskData } from '@src/hooks/data';
 import type { Task } from '@src/types/task';
@@ -47,7 +47,7 @@ const HomePage: React.FC<HomePageProps> = () => {
                 </button>
                 <button className={`${styles.button} button outline`}><IoFilter /> Filter</button>
             </div>
-
+            
             <div className={styles.tasksContainer}>
                 { allTasks && allTasks.length > 0 
                     ?  (allTasks.map((task) => (

@@ -97,7 +97,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
 	return (
 		<div className={`${styles.dropdownContainer} ${isOpen ? styles.opened : ''} ${className || ''} ${disabled ? styles.disabled : ''}`}>
-			{isOpen && <div className={`overlay transparent`} onClick={(e) => { e.stopPropagation(); closeDropdown(); console.log(123)}} />}
+			{isOpen && <div className={`overlay transparent`} onClick={(e) => { e.stopPropagation(); closeDropdown()}} />}
 			
 			<button 
 				className={`${styles.dropdownTrigger} background text`} 

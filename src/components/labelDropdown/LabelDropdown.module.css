@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
 .labelDropdown:global(.red) {
@@ -50,6 +50,11 @@
 
 .labelDropdown.noLabel {
     --dropdown-font-weight: 400;
+}
+
+.labelDropdown.multipleLabels {
+    --dropdown-border-color: var(--border);
+
 }
 
 .createLabelContainer {

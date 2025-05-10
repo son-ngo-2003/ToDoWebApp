@@ -1,0 +1,111 @@
+.filterbar {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: 0.75rem 1rem;
+	background-color: var(--card);
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+  
+.searchContainer {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 15rem;;
+}
+  
+.searchIcon {
+	position: absolute;
+	left: 12px;
+	color: var(--text-secondary);
+	font-size: 16px;
+	display: flex;
+	align-items: center;
+}
+  
+.searchInput {
+	width: 100%;
+	padding: 0.22rem 0.5rem 0.22rem 2rem;
+	border-radius: 6px;
+	border: 1px solid var(--border);
+	background-color: var(--background);
+	color: var(--text);
+	transition: border-color 0.2s ease;
+	font-weight: 500;
+}
+  
+.searchInput::placeholder {
+	color: var(--text-secondary);
+	opacity: 0.7;
+}
+  
+.clearButton {
+	position: absolute;
+	right: 8px;
+	background: none;
+	border: none;
+	color: var(--text-secondary);
+	font-size: 18px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+}
+  
+.clearButton:hover {
+	color: var(--text);
+}
+  
+.filtersContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 0.75rem;
+	flex: 1;
+}
+  
+.statusDropdown, .labelDropdown {
+	width: 11rem;
+	margin-bottom: 0.25rem;
+}
+
+.clearFilterButton {
+	padding: 0.3rem 0.5rem;
+	transition: all 0.2s ease;
+}
+
+.clearFilterButton:hover {
+	scale: 1 !important;
+	border: 1px solid var(--danger) !important;
+}
+
+.clearFilterButton > svg {
+	width: 1.3rem;
+	height: 1.3rem;
+}
+
+.datePickerInput {
+	padding: 0.22rem 1.8rem 0.22rem 2rem;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1rem;
+    font-weight: 500;
+	border: 1px solid var(--border);
+	min-height: auto;
+	border-radius: 0.5rem;
+	line-height: 1.3;
+	width: 12rem;
+}
+
+.datePickerInput:has(span) {
+	padding-right: 0.5rem;
+}
+
+.datePickerPlaceholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+	color: var(--text);
+}

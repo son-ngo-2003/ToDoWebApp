@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import { MdDragIndicator } from "react-icons/md";
 import { DnDItemTypes } from "@src/types/DnD";
 import { useDrag, useDrop } from "react-dnd";
+import { dateToString } from "@src/utils/date";
 
 interface TaskTileProps {
     task: Task,
@@ -88,6 +89,24 @@ const TaskTile: React.FC<TaskTileProps> = ({
         }
     }
 
+    const getDateShown = (dueDate: Date | null) => {
+        if (!dueDate) {
+            return 'No due date';
+        }
+
+        const deadlineStatus = getDeadlineStatus(dueDate);
+        const date = dateToString(dueDate);
+        switch (deadlineStatus) {
+            case 'overdue':
+                return `${date} - Overdue`;
+            case 'today':
+                return `Today`;
+            case 'upcoming':
+            default:
+                return date;
+        }
+    }
+
     const handleCheckboxChange = (checked: boolean) => {
         setIsChecked(checked);
         if (onCheckboxChange) {
@@ -119,7 +138,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
                 <h3 className="title">{task.title}</h3>
                 <div className={`${styles.dateContainer} ${getDeadlineStatus(task.dueDate)}`}>
                     <LuCalendar size={17}/>
-                    <p className="text">{task.dueDate ? task.dueDate.toLocaleDateString() : "No due date"}</p>
+                    <p className="text">{getDateShown(task.dueDate)}</p>
                 </div>
             </div>
 
@@ -127,17 +146,17 @@ const TaskTile: React.FC<TaskTileProps> = ({
                 <div className={`${styles.dropdownContainer}`}>
                     <p className="text">Label</p>
                     <LabelDropdown 
-                        labelId={task.label ? task.label.id : null} 
+                        selectedLabelIds={task.label ? [task.label.id] : []} 
                         className={`${styles.labelDropdown}`}
-                        onSelectLabel={(label) => updateLabelTask(task.id, label === null ? null : label.id)}
+                        onSelectLabel={(label) => updateLabelTask( task.id, (label == null || label.id === task.label?.id) ? null : label.id)}
                     />
                 </div>
 
                 <div className={`${styles.dropdownContainer}`}>
                     <p className="text">Status</p>
                     <StatusDropdown
-                        status={task.status}
-                        onChange={(status) => updateTaskStatus(task.id, status)}
+                        selectedStatus={[task.status]}
+                        onSelectStatus={(status) => updateTaskStatus(task.id, status)}
                     />
                 </div>
             </div>

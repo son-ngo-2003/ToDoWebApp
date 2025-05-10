@@ -1,7 +1,17 @@
 import { db } from "@src/config/dexie"
 import { generateId } from "@src/config/uuid";
-import type { Task, TaskEntity } from "@src/types/task";
+import type { Label } from "@src/types/label";
+import type { Task, TaskEntity, TaskStatus } from "@src/types/task";
+import { isSameDate } from "@src/utils/date";
+import { isIncluded } from "@src/utils/string";
 import { useEffect, useRef } from "react";
+
+export interface TaskFilter {
+    searchValue: string;
+    statuses: TaskStatus[];
+    labels: Label[];
+    dueDate: Date | null;
+}
 
 const useTaskData = () => {
     const lastPriority = useRef(0);
@@ -31,6 +41,25 @@ const useTaskData = () => {
             } as Task;
         }));
     };
+
+    const getTasksByFilter = async ( filter: TaskFilter): Promise<Task[]> => {
+        const tasks = await db.tasks.orderBy('priority')
+                        .filter( t => !t.deleted 
+                            && (isIncluded(t.title, filter.searchValue) || isIncluded(t.description, filter.searchValue))
+                            && (filter.statuses.length > 0 ? filter.statuses.includes(t.status) : true)
+                            && (filter.labels.length > 0 ? filter.labels.map(l => l.id).includes(t.labelId || '_') : true)
+                            && (filter.dueDate ? isSameDate(t.dueDate, filter.dueDate) : true)
+                        )
+                        .toArray();
+
+        return Promise.all(tasks.map(async (task: TaskEntity) => {
+            const label = task.labelId ? await db.labels.get(task.labelId) : null;
+            return {
+                ...task,
+                label            
+            } as Task;
+        }));
+    }
 
     const addTask = async (task: TaskEntity) : Promise<Task> => {
         task.id = generateId();
@@ -106,7 +135,7 @@ const useTaskData = () => {
         return (await db.tasks.update(id, updatedTask)) > 0;
     };
 
-    return { getTasks, addTask, deleteTask, updateTask, 
+    return { getTasks, getTasksByFilter, addTask, deleteTask, updateTask, 
         updateLabelTask, increaseTaskPriority, updateTaskPriority, updateTaskStatus,
     };
 }
