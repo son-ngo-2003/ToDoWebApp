@@ -1,8 +1,9 @@
 * {
     --white: #ffffff;
+    --less-white: #e2e2e2;
     --black: #1C1C1E;
     --gray: #909494;
-    --dark-gray: #676868;
+    --dark-gray: #222323;
     --light-gray: #d7d9d9;
 
     --red: #ff595e;
@@ -40,12 +41,12 @@
 .dark-theme {
     --primary: var(--teal);
     --secondary: var(--yellow);
-    --text: var(--white);
-    --text-secondary: var(--white);
+    --text: var(--less-white);
+    --text-secondary: var(--less-white);
     --background: var(--black);
     --card: var(--dark-gray);
     --card-darker: var(--gray);
-    --border: var(--light-gray);
+    --border: var(--gray);
     --danger: var(--red);
     --success: var(--teal);
     --warning: var(--orange);

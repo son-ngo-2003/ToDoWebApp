@@ -2,10 +2,13 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
 import './styles/index.css';
 import { ErrorPage, HomePage, LabelPage } from './pages';
 import { Drawer } from './components';
+import { useTheme } from './hooks/ui';
 
 const Root: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+    const { theme } = useTheme();
+
     return (
-        <div className="light-theme App">
+        <div className={`${theme} App`}>
             <Drawer/>
             <div className='page-container'>
                 {children ?? <Outlet />}

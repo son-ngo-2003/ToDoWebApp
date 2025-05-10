@@ -6,16 +6,15 @@ import { Logo } from '@src/assets/svg';
 import { useLabelData } from '@src/hooks/data';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { FaRegMoon, FaSun } from 'react-icons/fa6';
-import { useEffect } from 'react';
+import { useTheme } from '@src/hooks/ui';
+import { Theme } from '@src/types/theme';
 
 interface DrawerProps {}
 
 const Drawer: React.FC<DrawerProps> = () => {
+    const { theme, toggleTheme } = useTheme();
     const { getLabels } = useLabelData();
     const lables = useLiveQuery(() => getLabels(), [], []);
-
-    const theme = 'light';
-    const toggleTheme = () => {}
 
     return (
         <div className={`${styles.drawer}`}>
@@ -26,7 +25,7 @@ const Drawer: React.FC<DrawerProps> = () => {
                 </div>
 
                 <button className={`${styles.themeToggle} ${styles.headerButton}`} onClick={toggleTheme}>
-                    {theme === 'light' ? <FaRegMoon/> : <FaSun />}
+                    {theme === Theme.DARK ? <FaRegMoon/> : <FaSun />}
                 </button>
             </div>
 

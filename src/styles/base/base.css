@@ -70,3 +70,7 @@
 .overlay.transparent {
     background-color: transparent;
 }
+
+* {
+    transition: background-color 0.2s ease;
+}
