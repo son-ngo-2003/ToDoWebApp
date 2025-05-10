@@ -6,3 +6,5 @@ export { default as LabelDropdown } from './labelDropdown/LabelDropdown';
 export { default as StatusDropdown } from './statusDropdown/StatusDropdown';
 
 export { default as ModalTaskForm } from './modalTaskForm/ModalTaskForm';
+
+export { default as Drawer } from './drawer/Drawer';
