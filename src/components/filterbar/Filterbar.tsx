@@ -32,23 +32,26 @@ interface FilterbarRef {
 
 interface FilterbarProps {
     onFilterChange?: (filter: FilterValues) => void;
+    fixFilterValues?: Partial<FilterValues>;
     className?: string;
 }
 
 const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
 	onFilterChange,
+    fixFilterValues,
 	className = ''
 }, ref) => {
     const [searchValue, setSearchValue] = useState<string>('');
     const [selectedStatuses, setSelectedStatuses] = useState<TaskStatus[]>([]);
     const [selectedLabels, setSelectedLabels] = useState<Label[]>([]);
     const [dueDate, setDueDate] = useState<Date | null>(null);
+    const fixFilterValuesString = JSON.stringify(fixFilterValues);
 
 	const resetFilter = () => {
-		setSearchValue('');
-		setSelectedStatuses([]);
-		setSelectedLabels([]);
-        setDueDate(null);
+		setSearchValue(fixFilterValues?.searchValue || '');
+        setSelectedStatuses(fixFilterValues?.statuses || []);
+		setSelectedLabels(fixFilterValues?.labels || []);
+        setDueDate(fixFilterValues?.dueDate || null);
 	}
 
     // Expose methods through ref
@@ -105,6 +108,10 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
 		});
 	}, [searchValue, selectedStatuses, selectedLabels, dueDate]);
 
+    useEffect(() => {
+        resetFilter();
+    }, [fixFilterValuesString]);
+
     return (
         <div className={`${styles.filterbar} ${className}`}>
             <div className={styles.searchContainer}>
@@ -117,6 +124,7 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
                     value={searchValue}
                     onChange={handleSearchChange}
                     className={`${styles.searchInput} text`}
+                    disabled={fixFilterValues?.searchValue !== undefined}
                 />
                 {searchValue && (
                     <button className={styles.clearButton} onClick={clearSearch}>
@@ -131,6 +139,7 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
                     onSelectStatus={handleStatusChange}
                     className={styles.statusDropdown}
                     placeholder='Select status...'
+                    disabled={fixFilterValues?.statuses !== undefined}
                 />
                 
                 <LabelDropdown
@@ -138,6 +147,7 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
                     onSelectLabel={handleLabelsChange}
                     className={styles.labelDropdown}
                     placeholder='Select labels...'
+                    disabled={fixFilterValues?.labels !== undefined}
                 />
 
                 <DatePickerInput
@@ -151,12 +161,15 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
                         input: styles.datePickerInput,
                         placeholder: styles.datePickerPlaceholder,
                     }}
+                    disabled={fixFilterValues?.dueDate !== undefined}
                 />
             </div>
 
-            <div className={`button outline ${styles.clearFilterButton}`}>Clear Filter <IoIosClose/></div>
+            <div className={`button outline ${styles.clearFilterButton}`}
+                onClick={resetFilter}
+            >Clear Filter <IoIosClose/></div>
         </div>
     );
 });
 
-export default Filterbar;
+export default React.memo(Filterbar);

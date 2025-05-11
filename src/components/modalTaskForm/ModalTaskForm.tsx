@@ -9,6 +9,7 @@ import { LuCalendar } from "react-icons/lu";
 import StatusDropdown from "../statusDropdown/StatusDropdown";
 import LabelDropdown from "../labelDropdown/LabelDropdown";
 import { useTaskData } from "@src/hooks/data";
+import { useTheme } from "@src/hooks/ui";
 
 interface ModalTaskFormProps {
     opened: boolean;
@@ -30,6 +31,7 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
     onEditTask,
     onDeleteTask,
 }) => {
+    const { theme } = useTheme();
     const { addTask, updateTask, deleteTask } = useTaskData();
 
     const [title, setTitle] = useState("");
@@ -86,7 +88,7 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
     return (
         <Modal opened={opened} onClose={onClose} centered
             title={<p className="sub-title">{mode === "add" ? "Add a task" : "Modify your task"}</p>} 
-            className="light-theme" padding={24} radius={10}
+            className={theme} padding={24} radius={10}
         >
             <form className={styles.form} onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                 <input

@@ -14,6 +14,7 @@ interface StatusDropdownProps {
     onSelectStatus?: (status: TaskStatus) => void;
     className?: string;
     placeholder?: string;
+    disabled?: boolean;
 }
 
 const StatusDropdown: React.FC<StatusDropdownProps> = ({
@@ -21,6 +22,7 @@ const StatusDropdown: React.FC<StatusDropdownProps> = ({
     onSelectStatus,
     className = "",
     placeholder = "No status",
+    disabled = false,
 }) => {
 
     const getDropdownProps = () => {
@@ -32,6 +34,7 @@ const StatusDropdown: React.FC<StatusDropdownProps> = ({
                 onClick: () => onSelectStatus?.(s),
             })),
             className: styles.statusDropdown,
+            disabled,
         }
 
         if (selectedStatus.length == 1) {

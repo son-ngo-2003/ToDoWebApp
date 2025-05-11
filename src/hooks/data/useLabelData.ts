@@ -7,6 +7,12 @@ const useLabelData = () => {
         return await db.labels.filter(l => !l.deleted).toArray();
     };
 
+    const getLabelById = async (id: string) : Promise<Label | undefined> => {
+        const label = await db.labels.get(id);
+        if (!label || label.deleted) { return undefined; }
+        return label;
+    };
+
     const addLabel = async (label: LabelEntity) : Promise<Label> => {
         label.id = generateId();
         const id = await db.labels.add(label);
@@ -36,7 +42,7 @@ const useLabelData = () => {
         return await db.labels.update(id, updatedLabel) > 0;
     };
 
-    return { getLabels, addLabel, updateLabel, deleteLabel };
+    return { getLabels, getLabelById, addLabel, updateLabel, deleteLabel };
 }
 
 export default useLabelData;

@@ -1,0 +1,19 @@
+.colorTick {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-primary);
+    cursor: pointer;
+}
+
+.dropdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+}
+
+.dropdown *:first-child {
+    position: absolute;
+}

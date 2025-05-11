@@ -3,6 +3,7 @@ import './styles/index.css';
 import { ErrorPage, HomePage, LabelPage } from './pages';
 import { Drawer } from './components';
 import { useTheme } from './hooks/ui';
+import { db } from './config/dexie';
 
 const Root: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const { theme } = useTheme();
@@ -23,7 +24,12 @@ export const router = createBrowserRouter([
         errorElement: <Root><ErrorPage/></Root>,
         children: [
             { index: true, element: <HomePage /> },
-            { path: '/labels/:labelId', element: <LabelPage /> },
+            { path: '/labels/:labelId', element: <LabelPage />,
+                loader: async ({ params }) => {
+                    if (!params.labelId) { throw new Error("Label ID is required"); }
+                    return await db.labels.get(params.labelId);
+                }
+            },
         ],
     },
 ]);

@@ -92,7 +92,7 @@
 }
 
 .drawerItem:hover {
-    background-color: var(--light-gray);
+    background-color: var(--border);
 }
 
 .drawerItem.active {

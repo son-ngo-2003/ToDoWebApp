@@ -7,6 +7,7 @@ interface ErrorPageProps {}
 
 const ErrorPage: React.FC<ErrorPageProps> = () => {
     const error: any = useRouteError();
+    const errorMessage = error?.message || "Something went wrong.";
     const navigate = useNavigate();
 
     const redirectHome = () => {
@@ -21,7 +22,7 @@ const ErrorPage: React.FC<ErrorPageProps> = () => {
                 <FaExclamationTriangle size={50} />
             </div>
             <h1 className={`${styles.title} title`}>
-                {isNotFound ? "404 - Page Not Found" : "Something went wrong"}
+                {isNotFound ? "404 - Page Not Found" : errorMessage}
             </h1>
             <p className={`${styles.message} text`}>
                 {isNotFound

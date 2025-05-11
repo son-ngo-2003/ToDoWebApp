@@ -12,6 +12,7 @@ interface LabelDropdownProps {
     onSelectLabel?: (label: Label | null) => void;
     className?: string;
     placeholder?: string;
+    disabled?: boolean;  
 }
 
 const LabelDropdown: React.FC<LabelDropdownProps> = ({
@@ -19,6 +20,7 @@ const LabelDropdown: React.FC<LabelDropdownProps> = ({
     onSelectLabel,
     className,
     placeholder = "Add Label",
+    disabled = false,
 }) => {
     const { getLabels, addLabel } = useLabelData();
     const [ selectedLabels, setSelectedLabels ] = useState<Label[]>([]);
@@ -110,6 +112,7 @@ const LabelDropdown: React.FC<LabelDropdownProps> = ({
             className: `${styles.labelDropdown} ${className} `,
             dropdownIcon: <FaPlus />,
             onTriggerMenu: (isOpen) => (isOpen && onOpenDropdown()),
+            disabled: disabled,
         }
 
         const deleteIcon = <div className={styles.iconContainer} onClick={(e) => {e.stopPropagation(); onSelectLabel?.(null);}}><IoClose /></div>;

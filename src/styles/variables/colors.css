@@ -1,10 +1,11 @@
 * {
     --white: #ffffff;
     --less-white: #e2e2e2;
-    --black: #1C1C1E;
-    --gray: #909494;
-    --dark-gray: #222323;
     --light-gray: #d7d9d9;
+    --gray: #606464;
+    --dark-gray: #222323;
+    --black: #1C1C1E;
+
 
     --red: #ff595e;
     --orange: #FA812F;

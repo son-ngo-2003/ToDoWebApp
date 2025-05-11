@@ -1,21 +1,58 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
+import { HiOutlineTag } from "react-icons/hi";
 import styles from './LabelPage.module.css';
-import { Filterbar, ModalTaskForm, TaskTile } from '@src/components';
+import { ColorTick, Filterbar, ModalTaskForm, TaskTile } from '@src/components';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useTaskData } from '@src/hooks/data';
+import { useLabelData, useTaskData } from '@src/hooks/data';
 import type { Task } from '@src/types/task';
+import type { FilterValues } from '@src/components/filterbar/Filterbar';
+import { useLoaderData } from 'react-router';
+import type { Label } from '@src/types/label';
+import type { Color } from '@src/types/colors';
+import { useParams } from 'react-router';
 
-interface HomePageProps {}
+interface LabelPageProps {}
 
-const HomePage: React.FC<HomePageProps> = () => {
-    const { getTasks, increaseTaskPriority, updateTaskPriority } = useTaskData();
-    const allTasks = useLiveQuery( () => getTasks(), [], []);
+const LabelPage: React.FC<LabelPageProps> = () => {
+    const { labelId } = useParams<{ labelId: string }>(); 
+    const [ pageLabel, setPageLabel ] = React.useState<Label | null>(null);
+
+    const { getLabelById, updateLabel } = useLabelData();
+    const { getTasksByFilter, increaseTaskPriority, updateTaskPriority } = useTaskData();
 
     const [isOpenTaskForm, setIsOpenTaskForm] = React.useState(false);
     const [taskOpenned, setTaskOpened] = React.useState<Task | null>(null);
+    
+    const [isOpenFilterbar, setIsOpenFilterbar] = React.useState(false);
+    const [currentFilter, setCurrentFilter] = React.useState<FilterValues>({searchValue: "", statuses: [], labels: [], dueDate: null});
+    const allTasks = useLiveQuery( () => getTasksByFilter(currentFilter), [currentFilter], []);
 
+    const [ inputTitle, setInputTitle ] = React.useState<string>("");
+    const handleChangeLabelName = async () => {
+        if (!pageLabel) return;
+        if (inputTitle !== pageLabel.name) {
+            await updateLabel({ ...pageLabel, name: inputTitle });
+        }
+    }
+    const handleChangeColor = async (color: Color) => {
+        if (!pageLabel) return;
+        if (color !== pageLabel.color) {
+            await updateLabel({ ...pageLabel, color });
+        }
+    }
+
+    useLiveQuery(async () => {
+        if (!labelId) return;
+        const label = await getLabelById(labelId);
+        if (!label) throw new Error("Label not found");
+
+        setPageLabel(label);
+        setInputTitle(label.name);
+        
+    }, [labelId], []);
+    
     const moveTask = async (dragId: string, dropId: string) => { // For drag and drop
         if (!allTasks) return;
         if (dragId === dropId) return;
@@ -30,9 +67,23 @@ const HomePage: React.FC<HomePageProps> = () => {
         }
     }
 
+    const nbFilterApplied = currentFilter.searchValue ? 1 : 0 +
+                            currentFilter.statuses.length +
+                            currentFilter.labels.length;
+
     return (
         <>
-            <h1 className="title">All Tasks</h1>
+            <div className={styles.titleContainer}>
+                <ColorTick value={pageLabel?.color || null} onChange={handleChangeColor}/>
+                <div className={styles.title}>
+                    <input className={`title ${styles.titleInput}`} 
+                        value={inputTitle} onChange={(e) => setInputTitle(e.target.value)}
+                        size={inputTitle.length + 1} onBlur={handleChangeLabelName}
+                        onKeyDown={(e) => {if (e.key === "Enter") e.currentTarget.blur()}}
+                    />
+                    <HiOutlineTag size={25}/>
+                </div>
+            </div>
             <div className="separate-line"/>
 
             <div className={styles.buttonContainer}>
@@ -45,9 +96,18 @@ const HomePage: React.FC<HomePageProps> = () => {
                 > 
                     <IoMdAddCircleOutline/> Add Task
                 </button>
-                <button className={`${styles.button} button outline`}><IoFilter /> Filter</button>
+                <button className={`${styles.button} button outline`}
+                    onClick={() => setIsOpenFilterbar(!isOpenFilterbar)}
+                >
+                    <IoFilter /> Filter {nbFilterApplied > 0 ? `(${nbFilterApplied})` : ""}
+                </button>
             </div>
-            
+
+            <div className={`${styles.filterbarContainer} ${isOpenFilterbar ? styles.open : ""}`}>
+                <Filterbar onFilterChange={setCurrentFilter} fixFilterValues={{ labels: pageLabel ? [pageLabel] : [] }}/>
+            </div>
+
+
             <div className={styles.tasksContainer}>
                 { allTasks && allTasks.length > 0 
                     ?  (allTasks.map((task) => (
@@ -76,4 +136,4 @@ const HomePage: React.FC<HomePageProps> = () => {
     );
 };
 
-export default HomePage;
+export default LabelPage;
