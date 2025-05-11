@@ -105,7 +105,7 @@ const useTaskData = () => {
         return (await updateTask(updatedTask));
     }
 
-    const updateLabelTask = async (taskId: string, labelId: string | null) : Promise<Task> => {
+    const updateLabelOfTask = async (taskId: string, labelId: string | null) : Promise<Task> => {
         const task = await db.tasks.get(taskId);
         if (!task) {
             throw new Error("Task not found");
@@ -146,7 +146,7 @@ const useTaskData = () => {
     };
 
     return { getTasks, getTasksByFilter, addTask, deleteTask, updateTask, updateTasksWhenDeleteLabel, 
-        updateLabelTask, increaseTaskPriority, updateTaskPriority, updateTaskStatus,
+        updateLabelOfTask, increaseTaskPriority, updateTaskPriority, updateTaskStatus,
     };
 }
 

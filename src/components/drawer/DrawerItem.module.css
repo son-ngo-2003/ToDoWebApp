@@ -8,8 +8,13 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.drawerItem:hover {
+.drawerItem:hover,
+.drawerItem.over  {
     background-color: var(--border);
+}
+
+.drawerItem.over.notAllow {
+    cursor: not-allowed;
 }
 
 .drawerItem.active {

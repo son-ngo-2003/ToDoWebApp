@@ -32,7 +32,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
     moveTask
 }) => {
     const taskRef = useRef<HTMLDivElement>(null);
-    const { updateLabelTask, updateTaskStatus } = useTaskData();
+    const { updateLabelOfTask, updateTaskStatus } = useTaskData();
     const [ isChecked, setIsChecked ] = useState<boolean>(false);
     const [isDragIndicatorHovered, setIsDragIndicatorHovered] = useState(false);
 
@@ -146,7 +146,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
                     <LabelDropdown 
                         selectedLabelIds={task.label ? [task.label.id] : []} 
                         className={`${styles.labelDropdown}`}
-                        onSelectLabel={(label) => updateLabelTask( task.id, (label == null || label.id === task.label?.id) ? null : label.id)}
+                        onSelectLabel={(label) => updateLabelOfTask( task.id, (label == null || label.id === task.label?.id) ? null : label.id)}
                         disabled={true}
                     />
                 </div>
@@ -158,7 +158,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
                     <LabelDropdown 
                         selectedLabelIds={task.label ? [task.label.id] : []} 
                         className={`${styles.labelDropdown}`}
-                        onSelectLabel={(label) => updateLabelTask( task.id, (label == null || label.id === task.label?.id) ? null : label.id)}
+                        onSelectLabel={(label) => updateLabelOfTask( task.id, (label == null || label.id === task.label?.id) ? null : label.id)}
                     />
                 </div>
 

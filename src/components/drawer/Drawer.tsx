@@ -2,7 +2,7 @@ import styles from './Drawer.module.css';
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { ReactSVG } from 'react-svg';
 import { Logo } from '@src/assets/svg';
-import { useLabelData } from '@src/hooks/data';
+import { useLabelData, useTaskData } from '@src/hooks/data';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { FaRegMoon, FaSun } from 'react-icons/fa6';
 import { useTheme } from '@src/hooks/ui';
@@ -17,6 +17,8 @@ const Drawer: React.FC<DrawerProps> = () => {
     const { theme, toggleTheme } = useTheme();
     const { getLabels } = useLabelData();
     const lables = useLiveQuery(() => getLabels(), [], []);
+
+    const { updateLabelOfTask } = useTaskData();
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleDrawer = () => {
@@ -63,6 +65,10 @@ const Drawer: React.FC<DrawerProps> = () => {
                                     label={label.name} 
                                     href={`/labels/${label.id}`}
                                     onClick={() => setIsOpen(false)}
+                                    allowDropTask={true}
+                                    onDropTask={(taskId) => {
+                                        updateLabelOfTask(taskId, label.id);
+                                    }}
                                 />
                             ))
                             : <span className={`${styles.emptyLabel} text`}>No labels</span>
