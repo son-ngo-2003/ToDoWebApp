@@ -10,5 +10,6 @@ export { default as AlertPopup, PopupType, type AlertPopupProps } from './alertP
 
 export { default as ModalTaskForm } from './modalTaskForm/ModalTaskForm';
 export { default as Filterbar } from './filterbar/Filterbar';
+export { default as TaskListView } from './taskListView/TaskListView';
 
 export { default as Drawer } from './drawer/Drawer';
