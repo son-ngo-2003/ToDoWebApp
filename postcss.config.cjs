@@ -1,7 +1,7 @@
 module.exports = {
     plugins: [
         require('postcss-import'),
-        require('autoprefixer'),
+        require('postcss-custom-media'),
         require('postcss-preset-mantine'),
         require('postcss-simple-vars')({
             variables: {
@@ -12,5 +12,6 @@ module.exports = {
                 'mantine-breakpoint-xl': '88em',
             },
         }),
+        require('autoprefixer'),
     ]
 }

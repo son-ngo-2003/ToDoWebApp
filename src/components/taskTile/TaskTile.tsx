@@ -10,6 +10,7 @@ import { MdDragIndicator } from "react-icons/md";
 import { DnDItemTypes } from "@src/types/DnD";
 import { useDrag, useDrop } from "react-dnd";
 import { dateToString } from "@src/utils/date";
+import StatusTick from "../statusTick/StatusTick";
 
 interface TaskTileProps {
     task: Task,
@@ -140,10 +141,19 @@ const TaskTile: React.FC<TaskTileProps> = ({
                     <LuCalendar size={17}/>
                     <p className="text">{getDateShown(task.dueDate)}</p>
                 </div>
+
+                <div className={`${styles.mobileLabelDropdown} ${task.label ? styles.hasLabel : ""}`}>
+                    <LabelDropdown 
+                        selectedLabelIds={task.label ? [task.label.id] : []} 
+                        className={`${styles.labelDropdown}`}
+                        onSelectLabel={(label) => updateLabelTask( task.id, (label == null || label.id === task.label?.id) ? null : label.id)}
+                        disabled={true}
+                    />
+                </div>
             </div>
 
             <div className={`${styles.rightPart}`}>
-                <div className={`${styles.dropdownContainer}`}>
+                <div className={`${styles.dropdownContainer} ${styles.labelDropdown}`}>
                     <p className="text">Label</p>
                     <LabelDropdown 
                         selectedLabelIds={task.label ? [task.label.id] : []} 
@@ -152,13 +162,16 @@ const TaskTile: React.FC<TaskTileProps> = ({
                     />
                 </div>
 
-                <div className={`${styles.dropdownContainer}`}>
+                <div className={`${styles.dropdownContainer} ${styles.statusDropdown}`}>
                     <p className="text">Status</p>
                     <StatusDropdown
                         selectedStatus={[task.status]}
                         onSelectStatus={(status) => updateTaskStatus(task.id, status)}
                     />
                 </div>
+
+                <StatusTick status={task.status} className={styles.statusTick}/>
+                
             </div>
 
             <div className={`${styles.dragIndicatorContainer}`}

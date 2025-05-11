@@ -114,23 +114,30 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
 
     return (
         <div className={`${styles.filterbar} ${className}`}>
-            <div className={styles.searchContainer}>
-                <div className={styles.searchIcon}>
-                    <FiSearch />
+            <div className={styles.firstPartContainer}>
+                <div className={styles.searchContainer}>
+                    <div className={styles.searchIcon}>
+                        <FiSearch />
+                    </div>
+                    <input
+                        type="text"
+                        placeholder="Search tasks..."
+                        value={searchValue}
+                        onChange={handleSearchChange}
+                        className={`${styles.searchInput} text`}
+                        disabled={fixFilterValues?.searchValue !== undefined}
+                    />
+                    {searchValue && (
+                        <button className={styles.clearButton} onClick={clearSearch}>
+                            <IoIosClose />
+                        </button>
+                    )}
                 </div>
-                <input
-                    type="text"
-                    placeholder="Search tasks..."
-                    value={searchValue}
-                    onChange={handleSearchChange}
-                    className={`${styles.searchInput} text`}
-                    disabled={fixFilterValues?.searchValue !== undefined}
-                />
-                {searchValue && (
-                    <button className={styles.clearButton} onClick={clearSearch}>
-                        <IoIosClose />
-                    </button>
-                )}
+
+                {/* This will be for responsive with max-width < 1200px */}
+                <div className={`button outline ${styles.clearFilterButton} text`} 
+                    onClick={resetFilter}
+                >Clear Filter <IoIosClose/></div>
             </div>
             
             <div className={styles.filtersContainer}>
@@ -152,7 +159,7 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
 
                 <DatePickerInput
                     id="dueDate" required clearable
-                    leftSection={<LuCalendar size={18} />}
+                    leftSection={<LuCalendar size={15} />}
                     placeholder="Select due date..."
                     value={dueDate}
                     onChange={(date) => date !== null ? setDueDate(dayjs(date).toDate()) : setDueDate(null)}
@@ -165,7 +172,7 @@ const Filterbar = forwardRef<FilterbarRef, FilterbarProps>(({
                 />
             </div>
 
-            <div className={`button outline ${styles.clearFilterButton}`}
+            <div className={`button outline ${styles.clearFilterButton} text`}
                 onClick={resetFilter}
             >Clear Filter <IoIosClose/></div>
         </div>

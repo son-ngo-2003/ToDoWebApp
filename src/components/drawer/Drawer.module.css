@@ -1,3 +1,5 @@
+@import "/src/styles/variables/index.css";
+
 .drawer {
     position: fixed;
     top: 0;
@@ -17,6 +19,7 @@
     padding: 0.8rem 1.25rem;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     justify-content: space-between;
     border-bottom: 1px solid var(--border);
 }
@@ -55,6 +58,10 @@
     transition: opacity 0.2s;
 }
 
+.headerButton.openToggle {
+    display: none;
+}
+
 .headerButton:hover {
     opacity: 0.6;
 }
@@ -77,10 +84,8 @@
 }
 
 .groupLabel {
-    font-size: 1rem;
     margin: 0 0 0.25rem 0.75rem;
     color: var(--text-secondary);
-    width: 100%;
 }
 
 .drawerItem {
@@ -105,6 +110,7 @@
 }
 
 .drawerItemLeft {
+    width: 100%;
     display: flex;
     align-items: center;
 }
@@ -125,8 +131,10 @@
 }
 
 .drawerItem .label {
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: color 0.3s;
-    font-size: 1.1rem;
 }
 
 .drawerItemRight {
@@ -143,4 +151,72 @@
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 0.4rem;
+}
+
+@media (--PC-low) {
+    .logoText {
+        font-size: 1.05rem;
+    }
+
+    .headerButton {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .logoApp span {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+
+    .drawerItem .iconContainer {
+        width: 1.15rem;
+        height: 1.15rem;
+    }
+}
+
+@media (--PC-low) {
+    .header {
+        padding: 0.6rem 1rem;
+    }
+
+    .logoText {
+        font-size: 1rem;
+    }
+
+    .drawer {
+        transform: translateX(-100%);
+        transition: all 0.4s ease-in;
+    }
+
+    .drawer.open {
+        transform: translateX(0);
+    }
+
+    .headerButtonsContainer {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .headerButton.openToggle {
+        display: flex;
+    }
+
+    .openToggle {
+        transition: transform 0.3s ease-out;
+        transition-delay: 0.1s;
+        transform: scale(1);
+    }
+
+    .openToggle.toOpen {
+        transform: translateX(4rem) scale(1.15);
+    }
+
+    .openToggle svg {
+        transition: all 0.3s ease-out;
+        transition-delay: 0.1s;
+    }
+
+    .openToggle.toOpen svg {
+        rotate: 180deg;
+    } 
 }

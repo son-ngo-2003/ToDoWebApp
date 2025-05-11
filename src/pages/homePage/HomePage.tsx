@@ -44,7 +44,7 @@ const HomePage: React.FC<HomePageProps> = () => {
 
             <div className={styles.buttonContainer}>
                 <button 
-                    className={`${styles.button} button`}
+                    className={`${styles.button} button text`}
                     onClick={() => {
                         setIsOpenTaskForm(true);
                         setTaskOpened(null);
@@ -52,7 +52,7 @@ const HomePage: React.FC<HomePageProps> = () => {
                 > 
                     <IoMdAddCircleOutline/> Add Task
                 </button>
-                <button className={`${styles.button} button outline`}
+                <button className={`${styles.button} button outline text`}
                     onClick={() => setIsOpenFilterbar(!isOpenFilterbar)}
                 >
                     <IoFilter /> Filter {nbFilterApplied > 0 ? `(${nbFilterApplied})` : ""}

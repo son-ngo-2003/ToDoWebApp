@@ -1,3 +1,5 @@
+@import "/src/styles/variables/index.css";
+
 .taskTile {
     display: flex;
     gap: 0.5rem;
@@ -57,10 +59,7 @@
     margin-right: 0.5rem;
 }
 
-.rightPart .statusDropdown {
-    width: 9.5rem;
-}
-
+.rightPart .statusDropdown,
 .rightPart .labelDropdown {
     width: 9.5rem;
 }
@@ -123,4 +122,49 @@
     height: 0.2rem;
     border-radius: 0.1rem;
     background-color: var(--primary);
+}
+
+.mobileLabelDropdown {
+    display: none;
+    max-width: 10.5rem;
+    margin-top: 0.6rem;
+}
+
+.statusTick {
+    display: none;
+}
+
+@media (--tablet) {
+    .mobileLabelDropdown.hasLabel {
+        display: block;
+        width: 7.5rem;
+    }
+
+    .dropdownContainer.labelDropdown {
+        display: none;
+    }
+
+    .dropdownContainer.statusDropdown {
+        display: none;
+    }
+
+    .statusTick {
+        display: flex;
+        width: 1.3rem;
+        height: 1.3rem;
+
+        position: absolute;
+        top: 0.8rem;
+        right: 1rem;
+    }
+
+    .middlePart h3 {
+        font-size: 0.9rem;
+    }
+
+    .taskTile {
+        padding: 0.3rem;
+        padding-bottom: 0.6rem;
+    }
+
 }

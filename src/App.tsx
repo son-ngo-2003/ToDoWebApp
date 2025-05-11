@@ -24,12 +24,7 @@ export const router = createBrowserRouter([
         errorElement: <Root><ErrorPage/></Root>,
         children: [
             { index: true, element: <HomePage /> },
-            { path: '/labels/:labelId', element: <LabelPage />,
-                loader: async ({ params }) => {
-                    if (!params.labelId) { throw new Error("Label ID is required"); }
-                    return await db.labels.get(params.labelId);
-                }
-            },
+            { path: '/labels/:labelId', element: <LabelPage /> },
         ],
     },
 ]);

@@ -7,24 +7,26 @@ import { useTheme } from "@src/hooks/ui";
 interface ColorTickProps {
     value: Color | null;
     onChange?: (color: Color) => void;
+    className?: string;
 }
 
 const ColorTick: React.FC<ColorTickProps> = ({
     value,
     onChange = () => {},
+    className = "",
 }) => {
     const { theme } = useTheme();
 
     return (
         <Menu position="bottom-start">
             <Menu.Target>
-                <div className={styles.colorTick} style={{backgroundColor: value ? `var(--${value})` : 'transparent'}}/>
+                <div className={`${styles.colorTick} ${className}`} style={{backgroundColor: value ? `var(--${value})` : 'transparent'}}/>
             </Menu.Target>
 
             <Menu.Dropdown className={`${styles.dropdown} ${theme}`}>
                 {colorList.map((color, ind) => (
-                    <Menu.Item 
-                        key={ind} className={`${styles.colorTick} ${styles.dropdownItem}`} 
+                    <div
+                        key={ind} className={`${styles.colorTick} ${styles.dropdownItem} ${className}`} 
                         style={{backgroundColor: `var(--${color})`}}
                         onClick={() => onChange(color)}
                     />

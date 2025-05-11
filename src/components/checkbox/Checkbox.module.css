@@ -1,3 +1,5 @@
+@import "/src/styles/variables/index.css";
+
 .checkboxWrapper * {
     box-sizing: border-box;
 }
@@ -29,8 +31,8 @@
 
 .cbxBox {
     position: relative;
-    width: 18px;
-    height: 18px;
+    width: 1.1rem;
+    height: 1.1rem;
     border-radius: 4px;
     transform: scale(1);
     border: 1px solid var(--border);
@@ -86,15 +88,26 @@
     user-select: none;
 }
 
-@media screen and (max-width: 640px) {
-    .cbx {
-        width: 100%;
-        display: inline-block;
-    }
-}
-
 @keyframes wave {
     50% {
         transform: scale(0.9);
+    }
+}
+
+@media (--tablet) {
+    .cbx {
+        padding: 4px 6px;
+        border-radius: 4px;
+    }
+
+    .cbxBox {
+        width: 0.9rem;
+        height: 0.9rem;
+    }
+
+    .cbxBox svg {
+        scale: 0.8;
+        top: 1px;
+        left: 0.5px;
     }
 }

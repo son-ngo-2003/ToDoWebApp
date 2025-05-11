@@ -1,7 +1,5 @@
 .colorTick {
-    width: 1.7rem;
-    height: 1.7rem;
-    border-radius: 0.5rem;
+    border-radius: 30%;
     background-color: var(--color-primary);
     cursor: pointer;
 }

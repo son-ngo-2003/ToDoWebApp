@@ -1,3 +1,4 @@
+@import "/src/styles/variables/index.css";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
@@ -30,13 +31,13 @@
     font-size: 1rem;
 }
 
-@media (max-width: 768px) { /* Tablet */
+@media (--PC-low) { /* Tablet */
     .title {
         font-size: 1.6rem;
     }
     
     .sub-title {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .text {
@@ -46,14 +47,14 @@
 
 @media (max-width: 425px) { /* Mobile-L */
     .title {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
     
     .sub-title {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     
     .text {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
     }
 }

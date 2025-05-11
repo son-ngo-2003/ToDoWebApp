@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 import { HiOutlineTag } from "react-icons/hi";
@@ -8,7 +8,6 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useLabelData, useTaskData } from '@src/hooks/data';
 import type { Task } from '@src/types/task';
 import type { FilterValues } from '@src/components/filterbar/Filterbar';
-import { useLoaderData } from 'react-router';
 import type { Label } from '@src/types/label';
 import type { Color } from '@src/types/colors';
 import { useParams } from 'react-router';
@@ -74,14 +73,17 @@ const LabelPage: React.FC<LabelPageProps> = () => {
     return (
         <>
             <div className={styles.titleContainer}>
-                <ColorTick value={pageLabel?.color || null} onChange={handleChangeColor}/>
+                <ColorTick 
+                    value={pageLabel?.color || null} onChange={handleChangeColor}
+                    className={styles.colorTick}
+                />
                 <div className={styles.title}>
-                    <input className={`title ${styles.titleInput}`} 
+                    <input className={`title ${styles.titleInput}`}  type='text'
                         value={inputTitle} onChange={(e) => setInputTitle(e.target.value)}
                         size={inputTitle.length + 1} onBlur={handleChangeLabelName}
                         onKeyDown={(e) => {if (e.key === "Enter") e.currentTarget.blur()}}
                     />
-                    <HiOutlineTag size={25}/>
+                    <HiOutlineTag size={23}/>
                 </div>
             </div>
             <div className="separate-line"/>

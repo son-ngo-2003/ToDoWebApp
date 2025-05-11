@@ -102,7 +102,7 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
                 />
 
                 <div className={`${styles.formGroup} ${styles.horizontal}`}>
-                    <label htmlFor="dueDate" className={`${styles.label} text`}>Status</label>
+                    <label htmlFor="dueDate" className={`${styles.label} sub-title`}>Status</label>
                     <StatusDropdown
                         selectedStatus={[status]}
                         onSelectStatus={(newStatus) => setStatus(newStatus)}
@@ -113,7 +113,7 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
                 <div className="separate-line" />
 
                 <div className={`${styles.formGroup} ${styles.horizontal}`}>
-                    <label htmlFor="dueDate" className={`${styles.label} text`}>Due Date</label>
+                    <label htmlFor="dueDate" className={`${styles.label} sub-title`}>Due Date</label>
                     <DatePickerInput
                         id="dueDate" required clearable
                         leftSection={<LuCalendar size={18} />}
@@ -129,7 +129,7 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
                 </div>
 
                 <div className={`${styles.formGroup} ${styles.horizontal}`}>
-                    <label htmlFor="dueDate" className={`${styles.label} text`}>Label </label>
+                    <label htmlFor="dueDate" className={`${styles.label} sub-title`}>Label </label>
                     <LabelDropdown
                         selectedLabelIds={ labelId ? [labelId] : []}
                         onSelectLabel={(label) => {
@@ -142,7 +142,7 @@ const ModalTaskForm: React.FC<ModalTaskFormProps> = ({
                 <div className="separate-line" />
 
                 <div className={styles.formGroup}>
-                    <label htmlFor="description" className={`${styles.label} text`}>Description</label>
+                    <label htmlFor="description" className={`${styles.label} sub-title`}>Description</label>
                     <textarea
                         placeholder="Add a description..."
                         value={description}

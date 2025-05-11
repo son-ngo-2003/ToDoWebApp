@@ -1,3 +1,5 @@
+@import "/src/styles/variables/index.css";
+
 .form {
     display: flex;
     flex-direction: column;
@@ -5,7 +7,6 @@
 
 .titleInput {
     border: none;
-    font-size: 2.5rem;
     outline: none;
     margin: 0 0 1rem 0 !important;
     background-color: transparent;;
@@ -13,11 +14,6 @@
 
 .titleInput::placeholder {
     opacity: 0.5;
-}
-
-.label {
-    font-size: 0.95rem;
-    font-weight: 500;
 }
 
 .descriptionTextarea {
@@ -76,4 +72,22 @@
 .deleteButton {
     background-color: var(--danger) !important;
     color: white;
+}
+
+@media (--PC-low) {
+	.datePickerInput, 
+	.datePickerPlaceholder {
+		font-size: 0.9rem;
+	}
+}
+
+@media (--mobile-L) {
+	.datePickerInput, 
+	.datePickerPlaceholder {
+		font-size: 0.75rem;
+	}
+
+    .titleInput {
+        margin: 0 0 0.5rem 0 !important;
+    }
 }

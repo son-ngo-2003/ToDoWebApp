@@ -1,0 +1,17 @@
+/* 
+    mobile-S: 320px;
+    mobile-M: 375px;
+    mobile-L: 425px;
+    tablet: 768px;
+    PC-low: 1024px;
+    PC-high: 1280px;
+    PC-XL: 1440px;
+*/
+
+@custom-media --mobile-S (max-width: 20rem);
+@custom-media --mobile-M (max-width: 23.4375rem);
+@custom-media --mobile-L (max-width: 26.5625rem);
+@custom-media --tablet (max-width: 48rem);
+@custom-media --PC-low (max-width: 64rem);
+@custom-media --PC-high (max-width: 80rem);
+@custom-media --PC-XL (max-width: 90rem);
