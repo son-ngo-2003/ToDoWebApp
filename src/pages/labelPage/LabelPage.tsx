@@ -3,23 +3,25 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 import { HiOutlineTag } from "react-icons/hi";
 import styles from './LabelPage.module.css';
-import { ColorTick, Filterbar, ModalTaskForm, TaskTile } from '@src/components';
+import { AlertPopup, ColorTick, Filterbar, ModalTaskForm, PopupType, TaskTile, type AlertPopupProps } from '@src/components';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useLabelData, useTaskData } from '@src/hooks/data';
 import type { Task } from '@src/types/task';
 import type { FilterValues } from '@src/components/filterbar/Filterbar';
 import type { Label } from '@src/types/label';
 import type { Color } from '@src/types/colors';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { MdDeleteOutline } from 'react-icons/md';
 
 interface LabelPageProps {}
 
 const LabelPage: React.FC<LabelPageProps> = () => {
     const { labelId } = useParams<{ labelId: string }>(); 
     const [ pageLabel, setPageLabel ] = React.useState<Label | null>(null);
+    const navigate = useNavigate();
 
-    const { getLabelById, updateLabel } = useLabelData();
-    const { getTasksByFilter, increaseTaskPriority, updateTaskPriority } = useTaskData();
+    const { getLabelById, updateLabel, deleteLabel } = useLabelData();
+    const { getTasksByFilter, increaseTaskPriority, updateTaskPriority, updateTasksWhenDeleteLabel } = useTaskData();
 
     const [isOpenTaskForm, setIsOpenTaskForm] = React.useState(false);
     const [taskOpenned, setTaskOpened] = React.useState<Task | null>(null);
@@ -27,6 +29,8 @@ const LabelPage: React.FC<LabelPageProps> = () => {
     const [isOpenFilterbar, setIsOpenFilterbar] = React.useState(false);
     const [currentFilter, setCurrentFilter] = React.useState<FilterValues>({searchValue: "", statuses: [], labels: [], dueDate: null});
     const allTasks = useLiveQuery( () => getTasksByFilter(currentFilter), [currentFilter], []);
+
+    const [ alertProps, setAlertProps ] = React.useState<AlertPopupProps>({isVisible: false} as AlertPopupProps);
 
     const [ inputTitle, setInputTitle ] = React.useState<string>("");
     const handleChangeLabelName = async () => {
@@ -40,6 +44,22 @@ const LabelPage: React.FC<LabelPageProps> = () => {
         if (color !== pageLabel.color) {
             await updateLabel({ ...pageLabel, color });
         }
+    }
+
+    const onClickDeleteLabel = async () => {
+        if (!pageLabel) return;
+        setAlertProps({ 
+            isVisible: true, 
+            type: PopupType.WARNING, 
+            message: "Do you really want to delete this label ?",
+            withConfirmButton: true,
+            onConfirm: async () => {
+                await deleteLabel(pageLabel.id);
+                await updateTasksWhenDeleteLabel(pageLabel.id);
+                navigate("/");
+            },
+            withCancelButton: true,
+        });
     }
 
     useLiveQuery(async () => {
@@ -85,6 +105,10 @@ const LabelPage: React.FC<LabelPageProps> = () => {
                     />
                     <HiOutlineTag size={23}/>
                 </div>
+
+                <button className={`${styles.themeToggle} ${styles.headerButton}`} onClick={onClickDeleteLabel}>
+                    <MdDeleteOutline />
+                </button>
             </div>
             <div className="separate-line"/>
 
@@ -133,6 +157,10 @@ const LabelPage: React.FC<LabelPageProps> = () => {
                 }}
                 mode={taskOpenned ? "edit" : "add"}
                 task={taskOpenned}    
+            />
+
+            <AlertPopup
+                {...alertProps}
             />
         </>
     );

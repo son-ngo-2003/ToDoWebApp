@@ -3,7 +3,6 @@ import './styles/index.css';
 import { ErrorPage, HomePage, LabelPage } from './pages';
 import { Drawer } from './components';
 import { useTheme } from './hooks/ui';
-import { db } from './config/dexie';
 
 const Root: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const { theme } = useTheme();

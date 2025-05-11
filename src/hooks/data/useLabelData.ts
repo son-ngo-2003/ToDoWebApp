@@ -3,6 +3,7 @@ import { generateId } from "@src/config/uuid";
 import type { Label, LabelEntity } from "@src/types/label";
 
 const useLabelData = () => {
+
     const getLabels = async () : Promise<Label[]> => {
         return await db.labels.filter(l => !l.deleted).toArray();
     };

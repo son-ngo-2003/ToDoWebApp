@@ -124,6 +124,16 @@ const useTaskData = () => {
         return (await updateTask(updatedTask));
     }
 
+    const updateTasksWhenDeleteLabel = async (labelId: string) : Promise<Task[]> => {
+        const tasks = await db.tasks.filter(t => t.labelId === labelId).toArray();
+        const updatedTasks = tasks.map(t => ({ ...t, labelId: null } as TaskEntity));
+
+        const updated = await Promise.all(updatedTasks.map(async (task) => {
+            return await updateTask(task);
+        }));
+        return updated;
+    }
+
     const deleteTask = async (id: string) : Promise<boolean> => {
         // Soft delete
         const task = await db.tasks.get(id);
@@ -135,7 +145,7 @@ const useTaskData = () => {
         return (await db.tasks.update(id, updatedTask)) > 0;
     };
 
-    return { getTasks, getTasksByFilter, addTask, deleteTask, updateTask, 
+    return { getTasks, getTasksByFilter, addTask, deleteTask, updateTask, updateTasksWhenDeleteLabel, 
         updateLabelTask, increaseTaskPriority, updateTaskPriority, updateTaskStatus,
     };
 }
