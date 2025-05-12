@@ -27,14 +27,14 @@ const DrawerItem: React.FC<DrawerItemProps> = ({
     onDropTask,
 }) => {
     // Drag and drop
-    const [ { isOver, isAllow }, dropRef ] = useDrop< DragItem, void, 
-        { isOver: boolean, isAllow: boolean }
+    const [ { isOver, isOverNotAllow }, dropRef ] = useDrop< DragItem, void, 
+        { isOver: boolean, isOverNotAllow: boolean }
     >({
         accept: DnDItemTypes.TASK,
         canDrop: () => allowDropTask && !!onDropTask,
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
-            isAllow: !!monitor.canDrop()
+            isOverNotAllow: !!monitor.isOver({ shallow: true }) && !monitor.canDrop()
         }),
         drop: (item: DragItem) => {
             onDropTask?.(item.id);
@@ -44,7 +44,7 @@ const DrawerItem: React.FC<DrawerItemProps> = ({
     return href 
         ? (
             <NavLink ref={(e) => {dropRef(e)} } to={href} 
-                className={({isActive}) => `${styles.drawerItem} ${isActive ? styles.active : ''} ${isOver ? styles.over : ''} ${!isAllow ? styles.notAllow : ''}`}
+                className={({isActive}) => `${styles.drawerItem} ${isActive ? styles.active : ''} ${isOver ? styles.over : ''} ${isOverNotAllow ? styles.overNotAllow : ''}`}
                 onClick={onClick}
             >
                 {({ isActive, isPending }) => (

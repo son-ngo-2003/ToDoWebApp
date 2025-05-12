@@ -13,8 +13,8 @@
     background-color: var(--border);
 }
 
-.drawerItem.over.notAllow {
-    cursor: not-allowed;
+.drawerItem.overNotAllow {
+    background-color: var(--red-low-opacity);
 }
 
 .drawerItem.active {
