@@ -1,0 +1,101 @@
+commit a74ee2718e02c10fef6a869a9b43dfa469bd256b
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Mon May 12 08:54:23 2025 +0200
+
+    add drag and drop for drawerItem
+
+commit 98d54e0d1ff04b059704162a2b70f9abfe30b314
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sun May 11 22:16:15 2025 +0200
+
+    add drop for drawer item
+
+commit 491425a454530f949ec1975098d99b0bd6282a00
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sun May 11 21:58:21 2025 +0200
+
+    refactor code to follow DRY (Homepage and Labelpage <- TaskListView)
+
+commit 4b0d16e214bcd3ce1a7c9c37a5c7b94b4b7e1b22
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sun May 11 21:33:35 2025 +0200
+
+    add delete label
+
+commit b953507330ad512a17fdbd6797ea2369a03d1d68
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sun May 11 20:36:04 2025 +0200
+
+    add responsive
+
+commit 865e72a543fcb2fbd0487c4bdd9e5058c4c271f3
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sun May 11 10:22:36 2025 +0200
+
+    add LabelPage
+
+commit 0735b1e1691c6024c23af6cc125ee7a24962a78a
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sun May 11 00:39:16 2025 +0200
+
+    add theme
+
+commit 2be6a89b89c941324a402b2bed43b58953723db8
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sat May 10 23:40:28 2025 +0200
+
+    add filter bar and getTasksByFilter
+
+commit 0a91301db6d1fbcde72fa6141a8b9e50966810d3
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sat May 10 11:56:28 2025 +0200
+
+    add drawer
+
+commit ba142ede8059e338e1581240cb4736f9fc2f0489
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Sat May 10 01:41:45 2025 +0200
+
+    add router
+
+commit 845bdbb2a3275e264a43fcb737b97a32fb8aa83d
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Fri May 9 23:43:59 2025 +0200
+
+    add drag drop for tile
+
+commit 13625bdd78ab522c979954d16176568a3c7fc345
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Fri May 9 20:57:29 2025 +0200
+
+    fix bug with hooks data, finish basic UI for tasktile
+
+commit 2ad80ac49fdb80bff68c1ef43b4aead0b0261c54
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Thu May 8 21:01:10 2025 +0200
+
+    add data hooks: useLabelData and useTaskData
+
+commit dc6da02ef8c1cb2762fadeb9a53b086f8f567470
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Thu May 8 17:33:59 2025 +0200
+
+    add label type and add label to TaskTile
+
+commit f0bae7148b0972d8fc8bd5a4e22a2be794fbd9ac
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Thu May 8 15:36:42 2025 +0200
+
+    add Task type and basic TaskTile
+
+commit ad7b65eb788b2233929055ac7a249e418b7b6b08
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Thu May 8 15:34:12 2025 +0200
+
+    add styles and postcss
+
+commit 46a7a129098170e835679fa84e19505d5757df2a
+Author: son-ngo <ngotruongsonha@gmail.com>
+Date:   Thu May 8 15:31:09 2025 +0200
+
+    init commit vite app
